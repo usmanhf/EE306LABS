@@ -1,11 +1,36 @@
 	.ORIG x3000
-input	
-	
-	LEA R1,prompt
-printP	
-	
-		
+	LD	R6,STACKBASE; Stack pointer
+LOOP    LEA 	R0,prompt
+	TRAP 	x22
+	LEA	R1,UserInput
+	AND	R0,R0,#0
+	ADD	R2,R0,#-21
+CLEAR	STR	R0,R1,#0
+	ADD	R1,R1,#1
+	ADD	R2,R2,#1
+	BRn	CLEAR
+	LEA	R1,UserInput
+INPUT	TRAP	x20
+	TRAP	x21
+	NOT 	R2,R0
+	ADD 	R2,R2,#1
+	LD	R4,ENTER
+	ADD	R3,R2,R4
+	BRz	CHECK
+	STR 	R2,R1,#0
+	ADD 	R1,R1,#1
+	BR	INPUT
+CHECK	LEA	R1,UserInput
+	LDR	R2,R1,#0
+	LD	R3,d
+	ADD	R2,R2,R3
+	BRnp	Test
+	LDR	R2,R1,#1
+	BRnp	Test
 	Halt
+Test	LDI	R4,root
+	ADD	R4,R4,#2
+	
 
 ; Subroutine that prints a positive 2's complement number on the display
 ; Input Register: R0 (positive 2's complement number)
@@ -56,6 +81,10 @@ DIV10_AGAIN      ADD  R0, R0, #-10
                  BR   DIV10_AGAIN
 DIV10_DONE       ADD  R0, R0, #10
                  RET
-
-prompt .STRINGZ "Type a professor's name and then press Enter:"
+root		.FILL x4000
+d		.FILL x0064
+ENTER		.FILL x000A
+notFound	.STRINGZ "No Entry"
+prompt 		.STRINGZ "Type a professor's name and then press Enter:"
+UserInput	.BLKW #21
 	.END
