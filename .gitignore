@@ -1,6 +1,5 @@
-user_program.bin
-user_program.hex
-user_program.lst
-user_program.obj
-user_program.sym
-.obj
+*.obj
+*.bin
+*.hex
+*.sym
+*.lst
