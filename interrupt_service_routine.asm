@@ -27,7 +27,7 @@ out1	LDR R3,R1,#0
 	JSR print
 	ADD R1,R1,#1
 	BR out1
-Done1	LDR R3,R0,#0
+Done1	ADD R3,R0,#0
 	JSR print
 	LEA R1,goodP2
 out2	LDR R3,R1,#0
@@ -37,13 +37,13 @@ out2	LDR R3,R1,#0
 	BR out2
 Done2 	LD R5,convert
 	ADD R0,R0,R5
-	LDR R3,R0,#0
+	ADD R3,R0,#0
 	JSR print
 	LD R3,period
 	JSR print
 	BR Done
 
-Invalid	LDR R3,R0,#0
+Invalid	ADD R3,R0,#0
 	JSR print
 	LEA R1,bad
 outLoop	LDR R3,R1,#0
